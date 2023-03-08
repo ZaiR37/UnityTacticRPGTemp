@@ -7,7 +7,9 @@ using UnityEngine.EventSystems;
 public class UnitActionSystem : MonoBehaviour
 {
     public static UnitActionSystem Instance { get; private set;}
+
     public event EventHandler onSelectedUnitChanged;
+    public event EventHandler onSelectedActionChanged;
     
     [SerializeField] private Unit selectedUnit;
     [SerializeField] private LayerMask unitLayerMask;
@@ -70,7 +72,10 @@ public class UnitActionSystem : MonoBehaviour
         onSelectedUnitChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SetSelectedAction(BaseAction baseAction) => selectedAction = baseAction;
+    public void SetSelectedAction(BaseAction baseAction){
+        selectedAction = baseAction;
+        onSelectedActionChanged?.Invoke(this, EventArgs.Empty);
+    }
 
     private void SetBusy() => isBusy = true;
     private void ClearBusy() => isBusy = false;
