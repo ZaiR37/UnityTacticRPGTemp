@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,13 +34,15 @@ public class MoveAction : BaseAction
         else{
             unitAnimator.SetBool("IsWalking", false);
             isActive = false;
+            onActionComplete();
         }
 
         transform.forward = Vector3.Lerp(transform.forward, moveDirection, Time.deltaTime * rotateSpeed);
     }
 
 
-    public void Move(GridPosition gridPosition){
+    public void Move(GridPosition gridPosition, Action onActionComplete){
+        this.onActionComplete = onActionComplete;
         this.targetPosition = LevelGrid.Instance.GetWorldPosition(gridPosition);
         isActive = true;
     }
@@ -59,19 +62,13 @@ public class MoveAction : BaseAction
                 GridPosition offsetGridPosition = new GridPosition(x, z);
                 GridPosition testGridPosition = unitGridPosition + offsetGridPosition;
 
-                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)){
-                    continue;
-                }
+                if (!LevelGrid.Instance.IsValidGridPosition(testGridPosition)) continue;
 
-                if (unitGridPosition == testGridPosition){
-                    // Same Grid Position where the unit is already at
-                    continue;
-                }
+                // Same Grid Position where the unit is already at
+                if (unitGridPosition == testGridPosition) continue;
 
-                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)){
-                    // Grid Position already occupied with another Unit
-                    continue;
-                }
+                // Grid Position already occupied with another Unit
+                if (LevelGrid.Instance.HasAnyUnitOnGridPosition(testGridPosition)) continue;
 
                 validGridPositionList.Add(testGridPosition);
             }
