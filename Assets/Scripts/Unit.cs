@@ -5,9 +5,9 @@ using System;
 
 public class Unit : MonoBehaviour
 {
-    private const int ACTION_POINTS_MAX = 2;
-
     public static event EventHandler OnAnyActionPointsChanged;
+
+    [SerializeField] private bool isEnemy;
 
     private GridPosition gridPosition;
     private MoveAction moveAction;
@@ -15,6 +15,7 @@ public class Unit : MonoBehaviour
     private BaseAction[] baseActionArray;
     
     private int actionPoints = 2;
+    [SerializeField] private int ACTION_POINTS_MAX = 2;
 
     private void Awake(){
         moveAction = GetComponent<MoveAction>();
@@ -43,7 +44,9 @@ public class Unit : MonoBehaviour
     public SpinAction GetSpinAction() => spinAction;
     public GridPosition GetGridPosition() => gridPosition;
     public BaseAction[] GetBaseActionArray() => baseActionArray;
+
     public int GetActionPoints() => actionPoints;
+    public bool IsEnemy() => isEnemy;
 
     public bool CanSpendActionPointsToTakeAction(BaseAction baseAction){
         return (actionPoints >= baseAction.GetActionPointsCost());
@@ -55,8 +58,16 @@ public class Unit : MonoBehaviour
     }
 
     private void TurnSystem_OnTurnChanged(object sender, EventArgs e){
-        actionPoints = ACTION_POINTS_MAX;
-        OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+
+        if(IsEnemy() && !TurnSystem.Instance.IsPlayerTurn() ||
+            (!IsEnemy()) && TurnSystem.Instance.IsPlayerTurn())
+        {
+            actionPoints = ACTION_POINTS_MAX;
+            OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+
+
     }
 
     public bool TrySpendActionPointsToTakeAction(BaseAction baseAction){

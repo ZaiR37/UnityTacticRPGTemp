@@ -34,6 +34,7 @@ public class UnitActionSystem : MonoBehaviour
 
     private void Update() {
         if (isBusy) return;
+        if (!TurnSystem.Instance.IsPlayerTurn()) return;
         if(EventSystem.current.IsPointerOverGameObject()) return;
         if (TryHandleUnitSelection()) return;
 
@@ -60,7 +61,8 @@ public class UnitActionSystem : MonoBehaviour
 
         if (!Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, unitLayerMask)) return false;
         if (!raycastHit.transform.TryGetComponent<Unit>(out Unit unit)) return false;
-        if (unit == selectedUnit)return false;
+        if (unit == selectedUnit) return false;
+        if (unit.IsEnemy()) return false;
 
         SetSelectedUnit(unit);
         onActionStarted?.Invoke(this, EventArgs.Empty);
@@ -87,6 +89,7 @@ public class UnitActionSystem : MonoBehaviour
         OnBusyChanged?.Invoke(this, isBusy);
     }
 
+    public bool IsBusy() => isBusy;
     public Unit GetSelectedUnit() => selectedUnit;
     public BaseAction GetSelectedAction() => selectedAction;
 }
