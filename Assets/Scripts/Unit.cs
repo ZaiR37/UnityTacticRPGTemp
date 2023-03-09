@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     private MoveAction moveAction;
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
+    private int actionPoints = 2;
 
     private void Awake(){
         moveAction = GetComponent<MoveAction>();
@@ -35,4 +36,17 @@ public class Unit : MonoBehaviour
     public SpinAction GetSpinAction() => spinAction;
     public GridPosition GetGridPosition() => gridPosition;
     public BaseAction[] GetBaseActionArray() => baseActionArray;
+    
+    public int GetActionPoints() => actionPoints;
+
+    public bool CanSpendActionPointsToTakeAction(BaseAction baseAction) => (actionPoints >= baseAction.GetActionPointsCost());
+    private void SpendActionPoints(int amount) => actionPoints -= amount;
+
+    public bool TrySpendActionPointsToTakeAction(BaseAction baseAction){
+        if (!CanSpendActionPointsToTakeAction(baseAction)) return false;
+    
+        SpendActionPoints(baseAction.GetActionPointsCost());
+        return true; 
+    }
+
 }

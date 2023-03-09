@@ -28,7 +28,6 @@ public class MoveAction : BaseAction
 
         if (Vector3.Distance(transform.position, targetPosition) > stoppingDistance){
             unitAnimator.SetBool("IsWalking", true);
-
             transform.position += moveDirection * moveSpeed * Time.deltaTime;
         }
         else{
