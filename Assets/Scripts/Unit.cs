@@ -40,14 +40,6 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public MoveAction GetMoveAction() => moveAction;
-    public SpinAction GetSpinAction() => spinAction;
-    public GridPosition GetGridPosition() => gridPosition;
-    public BaseAction[] GetBaseActionArray() => baseActionArray;
-
-    public int GetActionPoints() => actionPoints;
-    public bool IsEnemy() => isEnemy;
-
     public bool CanSpendActionPointsToTakeAction(BaseAction baseAction){
         return (actionPoints >= baseAction.GetActionPointsCost());
     }
@@ -65,9 +57,6 @@ public class Unit : MonoBehaviour
             actionPoints = ACTION_POINTS_MAX;
             OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
         }
-
-
-
     }
 
     public bool TrySpendActionPointsToTakeAction(BaseAction baseAction){
@@ -76,4 +65,15 @@ public class Unit : MonoBehaviour
         SpendActionPoints(baseAction.GetActionPointsCost());
         return true; 
     }
+
+    public MoveAction GetMoveAction() => moveAction;
+    public SpinAction GetSpinAction() => spinAction;
+    public GridPosition GetGridPosition() => gridPosition;
+    public BaseAction[] GetBaseActionArray() => baseActionArray;
+    public Vector3 GetWorldPosition() => transform.position;
+
+    public int GetActionPoints() => actionPoints;
+    public bool IsEnemy() => isEnemy;
+    
+    public void Damage() => Debug.Log( transform + " damaged!");
 }

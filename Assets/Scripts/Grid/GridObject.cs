@@ -22,20 +22,16 @@ public class GridObject
         return gridPosition.ToString() + "\n" + unitString;
     }
 
-    public void AddUnit(Unit unit){
-        unitList.Add(unit);
+    public Unit GetUnit(){
+        if(HasAnyUnit()) return unitList[0];
+        else return null;
     }
 
-    public void RemoveUnit(Unit unit){
-        unitList.Remove(unit);
-    }
+    public void AddUnit(Unit unit) => unitList.Add(unit);
+    public void RemoveUnit(Unit unit) => unitList.Remove(unit);
+    public bool HasAnyUnit() => unitList.Count > 0;
 
-    public List<Unit> GetUnitList(){
-        return unitList;
-    }
+    public List<Unit> GetUnitList() => unitList;
 
-    public bool HasAnyUnit(){
-        return unitList.Count > 0;
-    }
 
 }
