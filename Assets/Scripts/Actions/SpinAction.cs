@@ -16,14 +16,12 @@ public class SpinAction : BaseAction
         totalSpinAmount += spinAddAmount;
 
         if (totalSpinAmount >= maxSpin){
-            isActive = false;
-            onActionComplete();
+            ActionComplete();
         }
     }
     
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete){
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
         totalSpinAmount = 0;
     }
 

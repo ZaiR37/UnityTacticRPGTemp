@@ -62,8 +62,7 @@ public class ShootAction : BaseAction
                 break;
 
             case State.Cooloff:
-                isActive = false;
-                onActionComplete();
+                ActionComplete();
                 break;
         }
     }
@@ -107,8 +106,7 @@ public class ShootAction : BaseAction
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete){
-        this.onActionComplete = onActionComplete;
-        isActive = true;
+        ActionStart(onActionComplete);
 
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
         
