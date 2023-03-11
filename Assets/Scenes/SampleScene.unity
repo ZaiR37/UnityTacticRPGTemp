@@ -565,7 +565,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
@@ -2982,6 +2982,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unit
       objectReference: {fileID: 0}
+    - target: {fileID: 3821284087969287824, guid: 65d02d3acc396ed4dbb790e6d8d52483,
+        type: 3}
+      propertyPath: shootDamage
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65d02d3acc396ed4dbb790e6d8d52483, type: 3}
 --- !u!1001 &2129912759
@@ -3068,7 +3073,7 @@ PrefabInstance:
     - target: {fileID: 5726778214391886958, guid: aac2ddf7d0af3a141a655d346333dfbc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 18
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 5726778214391886958, guid: aac2ddf7d0af3a141a655d346333dfbc,
         type: 3}
