@@ -27,7 +27,9 @@ public class ShootAction : BaseAction
     private float coolOfStateTime = 0.5f;
     private float rotateSpeed = 10f;
 
-    private int maxShootDistance = 4;
+    [SerializeField] private int maxShootDistance = 4;
+    [SerializeField] private int shootDamage = 40;
+
     private bool canShootBullet;
     private Unit targetUnit;
 
@@ -76,7 +78,7 @@ public class ShootAction : BaseAction
     }
 
     private void Shoot(){
-        targetUnit.Damage();
+        targetUnit.Damage(shootDamage);
         OnShoot?.Invoke(this, new OnShootEventArgs{
             targetUnit = targetUnit,
             shootingUnit = unit

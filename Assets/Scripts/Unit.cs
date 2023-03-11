@@ -10,6 +10,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private bool isEnemy;
 
     private GridPosition gridPosition;
+    private HealthSystem healthSystem;
     private MoveAction moveAction;
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
@@ -18,6 +19,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private int ACTION_POINTS_MAX = 2;
 
     private void Awake(){
+        healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
         baseActionArray = GetComponents<BaseAction>();
@@ -28,6 +30,7 @@ public class Unit : MonoBehaviour
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
 
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
+        healthSystem.OnDead += HealthSystem_OnDead;
     }
 
     private void Update(){
@@ -39,6 +42,10 @@ public class Unit : MonoBehaviour
         }
     }
 
+    public void Damage(int damageAmount){
+        healthSystem.Damage(damageAmount);
+    }
+
     public bool CanSpendActionPointsToTakeAction(BaseAction baseAction){
         return (actionPoints >= baseAction.GetActionPointsCost());
     }
@@ -48,8 +55,14 @@ public class Unit : MonoBehaviour
         OnAnyActionPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
-    private void TurnSystem_OnTurnChanged(object sender, EventArgs e){
+    public bool TrySpendActionPointsToTakeAction(BaseAction baseAction){
+        if (!CanSpendActionPointsToTakeAction(baseAction)) return false;
+    
+        SpendActionPoints(baseAction.GetActionPointsCost());
+        return true; 
+    }
 
+    private void TurnSystem_OnTurnChanged(object sender, EventArgs e){
         if(IsEnemy() && !TurnSystem.Instance.IsPlayerTurn() ||
             (!IsEnemy()) && TurnSystem.Instance.IsPlayerTurn())
         {
@@ -58,11 +71,9 @@ public class Unit : MonoBehaviour
         }
     }
 
-    public bool TrySpendActionPointsToTakeAction(BaseAction baseAction){
-        if (!CanSpendActionPointsToTakeAction(baseAction)) return false;
-    
-        SpendActionPoints(baseAction.GetActionPointsCost());
-        return true; 
+    private void HealthSystem_OnDead(object sender, EventArgs e){
+        LevelGrid.Instance.RemoveUnitAtGridPosition(gridPosition, this);
+        Destroy(gameObject);
     }
 
     public MoveAction GetMoveAction() => moveAction;
@@ -74,5 +85,5 @@ public class Unit : MonoBehaviour
     public int GetActionPoints() => actionPoints;
     public bool IsEnemy() => isEnemy;
     
-    public void Damage() => Debug.Log( transform + " damaged!");
+    
 }

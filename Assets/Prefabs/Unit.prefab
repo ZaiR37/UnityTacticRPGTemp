@@ -108,10 +108,11 @@ GameObject:
   - component: {fileID: 1562348853220243201}
   - component: {fileID: -5950034135095609537}
   - component: {fileID: 1562348853220243202}
+  - component: {fileID: 9023317852581750335}
   - component: {fileID: 6862306521131401184}
   - component: {fileID: 7922064846562088657}
   - component: {fileID: 3821284087969287824}
-  - component: {fileID: 9023317852581750335}
+  - component: {fileID: 5817736929073605542}
   m_Layer: 7
   m_Name: Unit
   m_TagString: Untagged
@@ -163,6 +164,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEnemy: 0
   ACTION_POINTS_MAX: 2
+--- !u!114 &9023317852581750335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1562348853220243203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 810b1fe2f94658b4d983e9a4a894d9ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1511760164661374871}
+  bulletProjectilePrefab: {fileID: 7981880010442213888, guid: cae1ec692d20e6e48a252450515d751d,
+    type: 3}
+  shootPointTransform: {fileID: 766322300008582303}
 --- !u!114 &6862306521131401184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a246035acc37849a580809df492cf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9023317852581750335
+--- !u!114 &5817736929073605542
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,13 +226,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1562348853220243203}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 810b1fe2f94658b4d983e9a4a894d9ec, type: 3}
+  m_Script: {fileID: 11500000, guid: 14a8b43a09039ce48aade8666a4beabc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 1511760164661374871}
-  bulletProjectilePrefab: {fileID: 7981880010442213888, guid: cae1ec692d20e6e48a252450515d751d,
-    type: 3}
-  shootPointTransform: {fileID: 766322300008582303}
 --- !u!1 &6408155151218644007
 GameObject:
   m_ObjectHideFlags: 0
