@@ -27,8 +27,9 @@ public class Unit : MonoBehaviour
 
     private void Start(){
         actionPoints = ACTION_POINTS_MAX;
-        
+
         gridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+
         LevelGrid.Instance.AddUnitAtGridPosition(gridPosition, this);
 
         TurnSystem.Instance.OnTurnChanged += TurnSystem_OnTurnChanged;
@@ -39,8 +40,10 @@ public class Unit : MonoBehaviour
         GridPosition newGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
         
         if (newGridPosition != gridPosition){
-            LevelGrid.Instance.UnitMovedGridPosition(this, gridPosition, newGridPosition); // Unit changed Grid Position
+            GridPosition oldGridPosition = gridPosition;
             gridPosition = newGridPosition;
+            
+            LevelGrid.Instance.UnitMovedGridPosition(this, oldGridPosition, newGridPosition); // Unit changed Grid Position
         }
     }
 

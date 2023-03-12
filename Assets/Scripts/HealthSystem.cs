@@ -27,7 +27,10 @@ public class HealthSystem : MonoBehaviour
 
     }
 
-    private void Die() => OnDead?.Invoke(this, EventArgs.Empty);
+    private void Die(){
+        OnDead?.Invoke(this, EventArgs.Empty);
+        GridSystemVisual.Instance.UpdateGridVisual();
+    }
 
     public float GetHealthNormalized() => (float)health / healthMax;
     

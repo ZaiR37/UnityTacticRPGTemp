@@ -14,6 +14,7 @@ public class MoveAction : BaseAction
     private float stoppingDistance = .05f;
     private float moveSpeed = 4f;
     private float rotateSpeed = 15f;
+    private bool stupidBug = true;
 
     private Vector3 targetPosition;
 
@@ -54,7 +55,15 @@ public class MoveAction : BaseAction
     public override List<GridPosition> GetValidActionGridPositionList(){
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
-        GridPosition unitGridPosition = unit.GetGridPosition();
+        GridPosition unitGridPosition;
+
+        if(stupidBug){
+            unitGridPosition = LevelGrid.Instance.GetGridPosition(transform.position);
+            stupidBug = false;
+        }
+        else {
+            unitGridPosition = unit.GetGridPosition();
+        }
 
         for (int x = -maxMoveDistance; x <= maxMoveDistance; x++){
             for (int z = -maxMoveDistance; z <= maxMoveDistance; z++){

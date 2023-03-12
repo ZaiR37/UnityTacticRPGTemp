@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class GridSystemVisual : MonoBehaviour
 {
     public static GridSystemVisual Instance { get; private set;}
 
-    [SerializeField] private Transform gridSystemVisualSinglePrefab;
 
+    [SerializeField] private Transform gridSystemVisualSinglePrefab;
+ 
     private GridSystemVisualSingle[,] gridSystemVisualSingleArray;
 
     private void Awake() {
@@ -17,13 +19,15 @@ public class GridSystemVisual : MonoBehaviour
             return;
         }        
         Instance = this;
+
     }
 
     private void Start() {
         int gridWidth = LevelGrid.Instance.GetWidth();
-        int gridHeight = LevelGrid.Instance.GetHight();
+        int gridHeight = LevelGrid.Instance.GetHeight();
 
         gridSystemVisualSingleArray = new GridSystemVisualSingle[gridWidth, gridHeight];
+        
         for (int x = 0; x < gridWidth; x++){
             for (int z = 0; z < gridHeight; z++){
                 GridPosition gridPosition = new GridPosition(x,z);
@@ -32,15 +36,15 @@ public class GridSystemVisual : MonoBehaviour
                 gridSystemVisualSingleArray[x,z] = gridSystemVisualSingleTransform.GetComponent<GridSystemVisualSingle>();
             }
         }
-    }
 
-    private void Update() {
+        UnitActionSystem.Instance.onSelectedActionChanged += UnitActionSystem_OnSelectedActionChanged;
+        LevelGrid.Instance.OnAnyUnitMoveGridPosition += LevelGrid_OnAnyUnitMoveGridPosition;
         UpdateGridVisual();
     }
 
     public void HideAllGridPosition(){
         int gridWidth = LevelGrid.Instance.GetWidth();
-        int gridHeight = LevelGrid.Instance.GetHight();
+        int gridHeight = LevelGrid.Instance.GetHeight();
 
         for (int x = 0; x < gridWidth; x++){
             for (int z = 0; z < gridHeight; z++){
@@ -58,10 +62,16 @@ public class GridSystemVisual : MonoBehaviour
     public void UpdateGridVisual(){
         HideAllGridPosition();
 
-        BaseAction selectedUnit = UnitActionSystem.Instance.GetSelectedAction();
+        BaseAction selectedAction = UnitActionSystem.Instance.GetSelectedAction();
+
 
         ShowGridPositionList(
-            selectedUnit.GetValidActionGridPositionList()
+            selectedAction.GetValidActionGridPositionList()
         );
     }
+
+
+    public void UnitActionSystem_OnSelectedActionChanged (object sender, EventArgs e) => UpdateGridVisual();
+    public void LevelGrid_OnAnyUnitMoveGridPosition (object sender, EventArgs e) => UpdateGridVisual();
+
 }

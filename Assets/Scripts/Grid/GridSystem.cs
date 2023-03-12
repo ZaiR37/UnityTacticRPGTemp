@@ -61,7 +61,7 @@ public class GridSystem
 		return width;
 	}
 
-	public int GetHight(){
+	public int GetHeight(){
 		return height;
 	}
 
