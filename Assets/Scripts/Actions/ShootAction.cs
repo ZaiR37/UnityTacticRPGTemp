@@ -85,8 +85,6 @@ public class ShootAction : BaseAction
         });
     }
 
-
-
     public override List<GridPosition> GetValidActionGridPositionList(){
         List<GridPosition> validGridPositionList = new List<GridPosition>();
 
@@ -120,13 +118,15 @@ public class ShootAction : BaseAction
     }
 
     public override void TakeAction(GridPosition gridPosition, Action onActionComplete){
-        ActionStart(onActionComplete);
-
         targetUnit = LevelGrid.Instance.GetUnitAtGridPosition(gridPosition);
         
         state = State.Aiming;
         stateTimer = aimingStateTime;
+
+        ActionStart(onActionComplete);
     }
 
     public override string GetActionName() => "Shoot";
+
+    public Unit GetTargetUnit() => targetUnit;
 }
