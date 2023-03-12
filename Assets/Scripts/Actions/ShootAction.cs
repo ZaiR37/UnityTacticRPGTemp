@@ -127,6 +127,6 @@ public class ShootAction : BaseAction
     }
 
     public override string GetActionName() => "Shoot";
-
+    public int GetMaxShootDistance() => maxShootDistance;
     public Unit GetTargetUnit() => targetUnit;
 }
