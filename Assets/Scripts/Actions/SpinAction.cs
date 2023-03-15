@@ -33,6 +33,16 @@ public class SpinAction : BaseAction
         };
 
     }
+
+    public override EnemyAIAction GetEnemyAIAction(GridPosition gridPosition){
+        return new EnemyAIAction{
+            gridPosition = gridPosition,
+            actionValue = 0,
+        };
+    }
+
     
     public override string GetActionName() => "Spin";
+
+	public override int GetActionPointsCost() => 2;
 }

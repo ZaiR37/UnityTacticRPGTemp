@@ -14,6 +14,7 @@ public class Unit : MonoBehaviour
     private GridPosition gridPosition;
     private HealthSystem healthSystem;
     private MoveAction moveAction;
+    private ShootAction shootAction;
     private SpinAction spinAction;
     private BaseAction[] baseActionArray;
     
@@ -24,6 +25,7 @@ public class Unit : MonoBehaviour
         healthSystem = GetComponent<HealthSystem>();
         moveAction = GetComponent<MoveAction>();
         spinAction = GetComponent<SpinAction>();
+        shootAction = GetComponent<ShootAction>();
         baseActionArray = GetComponents<BaseAction>();
     }
 
@@ -89,12 +91,14 @@ public class Unit : MonoBehaviour
 
     public MoveAction GetMoveAction() => moveAction;
     public SpinAction GetSpinAction() => spinAction;
+    public ShootAction GetShootAction() => shootAction;
     public GridPosition GetGridPosition() => gridPosition;
     public BaseAction[] GetBaseActionArray() => baseActionArray;
     public Vector3 GetWorldPosition() => transform.position;
 
     public int GetActionPoints() => actionPoints;
     public bool IsEnemy() => isEnemy;
+    public float GetHealthNormalized() => healthSystem.GetHealthNormalized();
     
     
 }
